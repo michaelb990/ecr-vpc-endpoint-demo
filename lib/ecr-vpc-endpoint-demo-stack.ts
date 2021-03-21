@@ -9,13 +9,13 @@ export class EcrVpcEndpointDemoStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    this.vpc = new ec2.Vpc(this, 'vpc', {
-      cidr: "10.0.0.0/16"
-    });
+    this.vpc = new ec2.Vpc(this, 'vpc');
 
-    this.addInterfaceEndpoint('ecr.api');
-    this.addInterfaceEndpoint('ecr.dkr');
-    this.addGatewayEndpoint('s3');
+    // uncomment the following lines to enable VPC endpoints
+    //
+    // this.addInterfaceEndpoint('ecr.api');
+    // this.addInterfaceEndpoint('ecr.dkr');
+    // this.addGatewayEndpoint('s3');
 
     this.bastion = this.createBastionHost();
   }
@@ -39,7 +39,7 @@ export class EcrVpcEndpointDemoStack extends cdk.Stack {
 
   createBastionHost(): ec2.IInstance {
     const userData = ec2.UserData.forLinux();
-    const dockerInstallCmd = 'sudo yum update -y && sudo amazon-linux-extras install docker -y && sudo service docker start && sudo usermod -a -G docker ssm-user';
+    const dockerInstallCmd = 'sudo yum update -y && sudo amazon-linux-extras install docker -y && sudo service docker start';
     userData.addCommands(dockerInstallCmd);
 
     const bastion = new ec2.BastionHostLinux(this, 'bastion', {
