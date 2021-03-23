@@ -13,6 +13,26 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
  * `cdk diff`        compare deployed stack with current state
  * `cdk synth`       emits the synthesized CloudFormation template
 
+## Setup environment
+* Install `node` & `npm`
+```sh
+brew update
+brew install node
+```
+
+* Install cdk
+```sh
+npm install -g cdk
+```
+
+* Install session manager plugin ([instructions](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html))
+```sh
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/mac/sessionmanager-bundle.zip" -o "sessionmanager-bundle.zip"
+unzip sessionmanager-bundle.zip
+sudo ./sessionmanager-bundle/install -i /usr/local/sessionmanagerplugin -b /usr/local/bin/session-manager-plugin
+```
+
+
 ## Synthesize stack
 ```sh
 # export the credentials for the AWS account you'd like to use
